@@ -8,7 +8,7 @@
                     v-model="newTodo"
                     @keyup.enter="addTask"
                 />
-                <button @click="addTask">Thêm</button>
+                <button @click="addTask()">Thêm</button>
             </div>
             <ul class="list mt-3">
                 <li v-if="list.length <= 0" class="item text-center">Danh sách trống</li>
@@ -24,71 +24,58 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import {ref} from 'vue';
-export default {
-    setup() {
-        const newTodo = ref("")
-        const list = ref(
-            [
-                { 
-                    elm: 'Nấu cơm',
-                    status:false
-                }, 
-                { 
-                    elm: 'Rửa bát',
-                    status:false
-                },
-                { 
-                    elm: 'Đi học',
-                    status:true
-                },
-                { 
-                    elm: 'Giặt đồ',
-                    status:false
-                },
-                { 
-                    elm: 'Rửa xe',
-                    status:false
-                },
-                { 
-                    elm: 'Tán gái',
-                    status:false
-                },
-            ]
-        )
-        const input = ref(null)
+    const newTodo = ref("")
+    const list = ref(
+        [
+            { 
+                elm: 'Nấu cơm',
+                status:false
+            }, 
+            { 
+                elm: 'Rửa bát',
+                status:false
+            },
+            { 
+                elm: 'Đi học',
+                status:true
+            },
+            { 
+                elm: 'Giặt đồ',
+                status:false
+            },
+            { 
+                elm: 'Rửa xe',
+                status:false
+            },
+            { 
+                elm: 'Tán gái',
+                status:false
+            },
+        ]
+    )
+    const input = ref(null)
 
-        function addTask() {
-            this.newTodo === "" ? console.log("Đang bị trống") : 
-            this.list.some(item => item.elm === this.newTodo) 
-            ? (console.log("Có rồi nhé !"), this.list.filter(item => item.elm !== this.newTodo))
-            : this.list.push({elm: this.newTodo})
-            this.input.value = ""
-        }
-        function deleteTask(content) {
-            const filterArr = this.list.filter(item => item.elm !== content)
-            this.list = filterArr
-            this.setCountDoneTask()
-        }
-        function setCountDoneTask() {
-            return this.list.filter(item => item.status === true).length
-        }
-        function doneTask(item) {
-            this.list[item].status = !this.list[item].status
-            this.setCountDoneTask()
-        }
-        return {
-            newTodo,
-            list,
-            input,
-            addTask,
-            deleteTask,
-            doneTask,
-            setCountDoneTask
-        }
+    function addTask() {
+        this.newTodo === "" ? console.log("Đang bị trống") : 
+        this.list.some(item => item.elm === this.newTodo) 
+        ? (console.log("Có rồi nhé !"), this.list.filter(item => item.elm !== this.newTodo))
+        : this.list.push({elm: this.newTodo})
+        this.input.value = ""
     }
-}
+    function deleteTask(content) {
+        const filterArr = this.list.filter(item => item.elm !== content)
+        this.list = filterArr
+        this.setCountDoneTask()
+    }
+    function setCountDoneTask() {
+        return this.list.filter(item => item.status === true).length
+    }
+    function doneTask(item) {
+        this.list[item].status = !this.list[item].status
+        this.setCountDoneTask()
+    }
 </script>
 
 <style scoped>
