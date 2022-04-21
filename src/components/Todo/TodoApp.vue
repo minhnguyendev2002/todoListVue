@@ -18,64 +18,79 @@
                     <span @click="deleteTask(item.elm)" class="d-inline-block text-center"><i class="fa-solid fa-trash"></i></span>
                 </li>
             </ul>
-            <div>Tổng số công việc: {{this.list.length}}</div>
+            <div>Tổng số công việc: {{ this.list.length }}</div>
             <div>Số công việc hoàn thành: {{setCountDoneTask()}}</div>
         </div>
     </div>
 </template>
 
-<script setup>
-import {ref} from 'vue';
-    const newTodo = ref("")
-    const list = ref(
-        [
-            { 
-                elm: 'Nấu cơm',
-                status:false
-            }, 
-            { 
-                elm: 'Rửa bát',
-                status:false
-            },
-            { 
-                elm: 'Đi học',
-                status:true
-            },
-            { 
-                elm: 'Giặt đồ',
-                status:false
-            },
-            { 
-                elm: 'Rửa xe',
-                status:false
-            },
-            { 
-                elm: 'Tán gái',
-                status:false
-            },
-        ]
-    )
-    const input = ref(null)
+<script>
+import {ref} from 'vue'
+export default {
+    name: 'Todo',
+    setup() {
+        const newTodo = ref("")
+        const input = ref(null)
+        const list = ref(
+            [
+                { 
+                    elm: 'Nấu cơm',
+                    status:false
+                }, 
+                { 
+                    elm: 'Rửa bát',
+                    status:false
+                },
+                { 
+                    elm: 'Đi học',
+                    status:true
+                },
+                { 
+                    elm: 'Giặt đồ',
+                    status:false
+                },
+                { 
+                    elm: 'Rửa xe',
+                    status:false
+                },
+                { 
+                    elm: 'Tán gái',
+                    status:false
+                },
+            ]
+        )
 
-    function addTask() {
-        this.newTodo === "" ? console.log("Đang bị trống") : 
-        this.list.some(item => item.elm === this.newTodo) 
-        ? (console.log("Có rồi nhé !"), this.list.filter(item => item.elm !== this.newTodo))
-        : this.list.push({elm: this.newTodo})
-        this.input.value = ""
+        function addTask() {
+            this.newTodo === "" ? console.log("Đang bị trống") : 
+            this.list.some(item => item.elm === this.newTodo) 
+            ? (console.log("Có rồi nhé !"), this.list.filter(item => item.elm !== this.newTodo))
+            : this.list.push({elm: this.newTodo})
+            this.input.value = ""
+        }
+        function deleteTask(content) {
+            const filterArr = this.list.filter(item => item.elm !== content)
+            this.list = filterArr
+            this.setCountDoneTask()
+        }
+        function setCountDoneTask() {
+            return this.list.filter(item => item.status === true).length
+        }
+        function doneTask(item) {
+            this.list[item].status = !this.list[item].status
+            this.setCountDoneTask()
+        }
+
+        return {
+            newTodo,
+            input,
+            list,
+            addTask,
+            deleteTask,
+            setCountDoneTask,
+            doneTask
+        }
     }
-    function deleteTask(content) {
-        const filterArr = this.list.filter(item => item.elm !== content)
-        this.list = filterArr
-        this.setCountDoneTask()
-    }
-    function setCountDoneTask() {
-        return this.list.filter(item => item.status === true).length
-    }
-    function doneTask(item) {
-        this.list[item].status = !this.list[item].status
-        this.setCountDoneTask()
-    }
+}
 </script>
 
 <style scoped>

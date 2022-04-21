@@ -16,6 +16,6 @@
   @import "./assets/base.css";
   .content {
     width: calc(100% - 300px);
-    height: 100vh;
+    padding: 100px 0px;
   }
 </style>
