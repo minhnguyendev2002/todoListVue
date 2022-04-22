@@ -4,7 +4,8 @@
         <ul class="side-bar-list mt-5">
             <li><router-link :to="{ name: 'home' }">Todo App</router-link></li>
             <li><router-link :to="{ name: 'card' }">Card</router-link></li>
-            <li><router-link :to="{ name: 'userList' }">User List</router-link></li>
+            <li><router-link :to="{ name: 'userList' }">Signin form</router-link></li>
+            <li><router-link :to="{ name: 'weatherApp' }">Weather App</router-link></li>    
         </ul>
     </div>
 </template>
